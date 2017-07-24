@@ -17,3 +17,12 @@ build/Release
 # Dependency directory
 node_modules
 .idea
+
+
+DropModal.js
+FadeModal.js
+FlyModal.js
+modalFactory.js
+OutlineModal.js
+ScaleModal.js
+WaveModal.js
