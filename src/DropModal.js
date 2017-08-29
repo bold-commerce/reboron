@@ -3,10 +3,9 @@ import insertKeyframesRule from 'domkit/insertKeyframesRule';
 import appendVendorPrefix from 'domkit/appendVendorPrefix';
 import { css } from 'emotion';
 
-const animationDuration = '0.4s';
-const animationTimingFunction = 'cubic-bezier(0.7, 0, 0.3, 1)';
-
 const animation = {
+  duration: '0.4s',
+  timingFunction: 'cubic-bezier(0.7, 0, 0.3, 1)',
   showModalAnimation: css`
     @keyframes showModalAnimation {
       0%: {
@@ -97,10 +96,10 @@ export default modalFactory({
       left: 50%;
       background-color: white;
       z-index: 1050;
-      animation-duration: ${animationDuration};
+      animation-duration: ${animation.duration};
       animation-fill-mode: forwards;
       animation-name: ${visible ? hideModalAnimation : showModalAnimation};
-      animation-timing-function: ${animationTimingFunction};
+      animation-timing-function: ${animationa.timingFunction};
     `;
   },
   getBackdropStyle: (visible) => {
@@ -112,21 +111,21 @@ export default modalFactory({
       left: 0;
       z-index: 1040;
       background-color: #373A47;
-      animation-duration: ${animationDuration};
+      animation-duration: ${animation.duration};
       animation-fill-mode: forwards;
       animation-name: ${visible ? hideBackdropAnimation : showBackdropAnimation};
-      animation-timing-function: ${animationTimingFunction};
+      animation-timing-function: ${animation.timingFunction};
     `;
   },
   getContentStyle: (visible) => {
     return css`
       margin: 0;
       opacity: 0;
-      animation-duration: ${animationDuration};
+      animation-duration: ${animation.duration};
       animation-fill-mode: forwards;
       animation-delay: 0.25s;
       animation-name: showContentAnimation;
-      animation-timing-function: ${animationTimingFunction};
+      animation-timing-function: ${animation.timingFunction};
     `;
   },
 });
