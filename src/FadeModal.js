@@ -1,94 +1,95 @@
 import modalFactory from './modalFactory';
-import insertKeyframesRule from 'domkit/insertKeyframesRule';
-import appendVendorPrefix from 'domkit/appendVendorPrefix';
+import { css } from 'emotion';
 
 const animation = {
-  show: {
-    animationDuration: '0.3s',
-    animationTimingFunction: 'ease-out',
-  },
-  hide: {
-    animationDuration: '0.3s',
-    animationTimingFunction: 'ease-out',
-  },
-  showContentAnimation: insertKeyframesRule({
-    '0%': {
-      opacity: 0,
-    },
-    '100%': {
-      opacity: 1,
-    },
-  }),
-  hideContentAnimation: insertKeyframesRule({
-    '0%': {
-      opacity: 1,
-    },
-    '100%': {
-      opacity: 0,
-    },
-  }),
-  showBackdropAnimation: insertKeyframesRule({
-    '0%': {
-      opacity: 0,
-    },
-    '100%': {
-      opacity: 0.9,
-    },
-  }),
-  hideBackdropAnimation: insertKeyframesRule({
-    '0%': {
-      opacity: 0.9,
-    },
-    '100%': {
-      opacity: 0,
-    },
-  }),
+    duration: '0.3s',
+    timingFunction: 'ease-out',
+    showContentAnimation: css`
+        @keyframes showContentAnimation {
+            0%: {
+                opacity: 0;
+            }
+            100%: {
+                opacity: 1;
+            }
+        }
+    `,
+    hideContentAnimation: css`
+        @keyframes hideContentAnimation {
+            0%: {
+                opacity: 1;
+            }
+            100%: {
+                opacity: 0;
+            }
+        }
+    `,
+    showBackdropAnimation: css`
+        @keyframes showBackdropAnimation {
+            0%: {
+                opacity: 0;
+            }
+            100%: {
+                opacity: 0.9;
+            }
+        }
+    `,
+    hideBackdropAnimation: css`
+        @keyframes hideBackdropAnimation {
+            0%: {
+                opacity: 0.9;
+            }
+            100%: {
+                opacity: 0;
+            }
+        }
+    `,
 };
 
-const showAnimation = animation.show;
-const hideAnimation = animation.hide;
+const duration = animation.duration;
+const timingFunction = animation.timingFunction;
 const showContentAnimation = animation.showContentAnimation;
 const hideContentAnimation = animation.hideContentAnimation;
 const showBackdropAnimation = animation.showBackdropAnimation;
 const hideBackdropAnimation = animation.hideBackdropAnimation;
 
 export default modalFactory({
-  getRef: (willHidden) => {
-    return 'content';
-  },
-  getModalStyle: (willHidden) => {
-    return appendVendorPrefix({
-      zIndex: 1050,
-      position: 'fixed',
-      width: '500px',
-      transform: 'translate3d(-50%, -50%, 0)',
-      top: '50%',
-      left: '50%',
-    });
-  },
-  getBackdropStyle: (willHidden) => {
-    return appendVendorPrefix({
-      position: 'fixed',
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
-      zIndex: 1040,
-      backgroundColor: '#373A47',
-      animationFillMode: 'forwards',
-      animationDuration: '0.3s',
-      animationName: willHidden ? hideBackdropAnimation : showBackdropAnimation,
-      animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction,
-    });
-  },
-  getContentStyle: (willHidden) => {
-    return appendVendorPrefix({
-      margin: 0,
-      backgroundColor: 'white',
-      animationDuration: (willHidden ? hideAnimation : showAnimation).animationDuration,
-      animationFillMode: 'forwards',
-      animationName: willHidden ? hideContentAnimation : showContentAnimation,
-      animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction,
-    });
-  },
+    getRef: () => {
+        return 'content';
+    },
+    getModalStyle: () => {
+        return css`
+            z-index: 1050;
+            position: fixed;
+            width: 500px;
+            transform: translate3d(-50%, -50%, 0);
+            top: 50%;
+            left: 50%;
+        `;
+    },
+    getBackdropStyle: (visible) => {
+        return css`
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1040;
+            background-color: #373A47;
+            animation-fill-mode: forwards;
+            animation-duration: 0.3s;
+            animation-name: ${visible ? hideBackdropAnimation : showBackdropAnimation};
+            animation-timing-function: ${timingFunction};
+        `;
+    },
+    getContentStyle: (visible) => {
+        return css`
+            margin: 0;
+            background-color: white;
+            animation-duration: ${duration};
+            animation-fill-mode: forwards;
+            animation-name: ${visible ? hideContentAnimation : showContentAnimation};
+            animation-timing-function: ${timingFunction};
+        `;
+    },
 });

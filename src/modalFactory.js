@@ -54,9 +54,6 @@ export default (animation) => {
 
 	        const willHidden = this.state.willHidden;
 	        const animation = this.props.animation;
-	        // const defaultModalStyle = animation.getModalStyle(willHidden);
-	        // const backdropStyle = animation.getBackdropStyle(willHidden);
-	        // const contentStyle = animation.getContentStyle(willHidden);
 	        const ref = animation.getRef(willHidden);
 	        const sharp = animation.getSharp && animation.getSharp(willHidden, this.props.rectStyle);
 
@@ -68,14 +65,6 @@ export default (animation) => {
 				`;
 	        }
 
-	        // Apply custom style properties
-	        // if (this.props.modalStyle) {
-	        //   const prefixedModalStyle = appendVendorPrefix(this.props.modalStyle);
-	        //   for (let style in prefixedModalStyle) {
-	        //     modalStyle[style] = prefixedModalStyle[style];
-	        //   }
-	        // }
-
 			let backdropStyle = animation.getBackdropStyle(willHidden);
 			if (this.props.backdropStyle) {
 	        	backdropStyle = css`
@@ -84,13 +73,6 @@ export default (animation) => {
 				`;
 	        }
 
-	        // if (this.props.backdropStyle) {
-		    //     const prefixedBackdropStyle = appendVendorPrefix(this.props.backdropStyle);
-		    //     for (let style in prefixedBackdropStyle) {
-		    //     	backdropStyle[style] = prefixedBackdropStyle[style];
-		    //     }
-	        // }
-
 			let contentStyle = animation.getContentStyle(willHidden);
 			if (this.props.contentStyle) {
 				contentStyle = css`
@@ -98,13 +80,6 @@ export default (animation) => {
 					${this.props.contentStyle.map((attr, val) => `${attr}: ${val};`)}
 				`;
 			}
-
-	        // if (this.props.contentStyle) {
-		    //     const prefixedContentStyle = appendVendorPrefix(this.props.contentStyle);
-		    //     for (let style in prefixedContentStyle) {
-		    //     	contentStyle[style] = prefixedContentStyle[style];
-		    //     }
-	        // }
 
 	        const backdrop = this.props.backdrop ? React.createElement('div', {style: backdropStyle, onClick: this.props.closeOnClick ? this.handleBackdropClick : null}) : undefined;
 
