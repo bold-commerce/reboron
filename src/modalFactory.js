@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import transitionEvents from 'domkit/transitionEvents';
-import appendVendorPrefix from 'domkit/appendVendorPrefix';
 import PropTypes from 'prop-types';
 import { css } from 'emotion';
 

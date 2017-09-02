@@ -2,8 +2,14 @@ import modalFactory from './modalFactory';
 import { css } from 'emotion';
 
 const animation = {
-    duration: '0.3s',
-    timingFunction: 'ease-out',
+    showAnimation: {
+        duration: '0.3s',
+        timingFunction: 'ease-out',
+    },
+    hideAnimation: {
+        duration: '0.3s',
+        timingFunction: 'ease-out',
+    },
     showContentAnimation: css`
         @keyframes showContentAnimation {
             0%: {
@@ -46,8 +52,8 @@ const animation = {
     `,
 };
 
-const duration = animation.duration;
-const timingFunction = animation.timingFunction;
+const showAnimation = animation.showAnimation;
+const hideAnimation = animation.hideAnimation;
 const showContentAnimation = animation.showContentAnimation;
 const hideContentAnimation = animation.hideContentAnimation;
 const showBackdropAnimation = animation.showBackdropAnimation;
@@ -77,19 +83,19 @@ export default modalFactory({
             z-index: 1040;
             background-color: #373A47;
             animation-fill-mode: forwards;
-            animation-duration: 0.3s;
+            animation-duration: ${visible ? hideAnimation.duration : showAnimation.duration};
             animation-name: ${visible ? hideBackdropAnimation : showBackdropAnimation};
-            animation-timing-function: ${timingFunction};
+            animation-timing-function: ${visible ? hideAnimation.timingFunction : showAnimation.timingFunction};
         `;
     },
     getContentStyle: (visible) => {
         return css`
             margin: 0;
             background-color: white;
-            animation-duration: ${duration};
+            animation-duration: ${visible ? hideAnimation.duration : showAnimation.duration};
             animation-fill-mode: forwards;
             animation-name: ${visible ? hideContentAnimation : showContentAnimation};
-            animation-timing-function: ${timingFunction};
+            animation-timing-function: ${visible ? hideAnimation.timingFunction : showAnimation.timingFunction};
         `;
     },
 });

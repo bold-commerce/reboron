@@ -3,10 +3,14 @@ import modalFactory from './modalFactory';
 import { css } from 'emotion';
 
 const animation = {
-    showDuration: '0.8s',
-    showTimingFunction: 'cubic-bezier(0.6, 0, 0.4, 1)',
-    hideDuration: '0.4s',
-    hideTimingFunction: 'ease-out',
+    showAnimation: {
+        duration: '0.8s',
+        timingFunction: 'cubic-bezier(0.6, 0, 0.4, 1)',
+    },
+    hideAnimation: {
+        duration: '0.4s',
+        timingFunction: 'ease-out',
+    },
     showContentAnimation: css`
         @keyframes showContentAnimation {
             0%: {
@@ -52,10 +56,8 @@ const animation = {
     `,
 };
 
-const showDuration = animation.showDuration;
-const showTimingFunction = animation.showTimingFunction;
-const hideDuration = animation.hideDuration;
-const hideTimingFunction = animation.hideTimingFunction;
+const showAnimation = animation.showAnimation;
+const hideAnimation = animation.hideAnimation;
 const showContentAnimation = animation.showContentAnimation;
 const hideContentAnimation = animation.hideContentAnimation;
 const showBackdropAnimation = animation.showBackdropAnimation;
@@ -85,7 +87,7 @@ export default modalFactory({
         `;
         const rectStyle = css`
             composes: ${rectStyles};
-            animation-duration: ${visible ? '0.4s' : '0.8s'};
+            animation-duration: ${visible ? hideAnimation.duration : showAnimation.duration};
             animation-fill-mode: forwards;
             animation-name: ${visible ? hideContentAnimation : showSharpAnimation};
             stroke: #ffffff;
@@ -131,17 +133,17 @@ export default modalFactory({
             animation-fill-mode: forwards;
             animation-duration: 0.4s;
             animation-name: ${visible ? hideBackdropAnimation : showBackdropAnimation};
-            animation-timing-function: ${visible ? hideTimingFunction : showTimingFunction};
+            animation-timing-function: ${visible ? hideAnimation.timingFunction : showAnimation.timingFunction};
         `;
     },
     getContentStyle: (visible) => {
         return css`
             margin: 0;
             background-color: white;
-            animation-duration: ${visible ? hideDuration : showDuration};
+            animation-duration: ${visible ? hideAnimation.duration : showAnimation.duration};
             animation-fill-mode: forwards;
             animation-name: ${visible ? hideContentAnimation : showContentAnimation};
-            animation-timing-function: ${visible ? hideTimingFunction : showTimingFunction};
+            animation-timing-function: ${visible ? hideAnimation.timingFunction : showAnimation.timingFunction};
         `;
     },
 });
