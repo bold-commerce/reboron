@@ -8,11 +8,10 @@ export default (animation) => {
         constructor(props) {
 	        super(props);
 	        this.state = {
-		        willHidden: false,
-		        hidden: true
+		        closing: false,
+		        visible: false,
         	};
 
-	        this.hasHidden = this.hasHidden.bind(this);
 	        this.handleBackdropClick = this.handleBackdropClick.bind(this);
 	        this.leave = this.leave.bind(this);
 	        this.enter = this.enter.bind(this);
@@ -20,10 +19,6 @@ export default (animation) => {
 	        this.hide = this.hide.bind(this);
 	        this.toggle = this.toggle.bind(this);
 	        this.listenKeyboard = this.listenKeyboard.bind(this);
-        };
-
-        hasHidden() {
-        	return this.state.hidden;
         };
 
         addTransitionListener(node, handle) {
@@ -48,15 +43,16 @@ export default (animation) => {
         };
 
         render() {
-	        const hidden = this.hasHidden();
-	        if (hidden) return null;
+	        if (!this.state.visible) {
+                return null;
+            }
 
-	        const willHidden = this.state.willHidden;
+	        const closing = this.state.closing;
 	        const animation = this.props.animation;
-	        const ref = animation.getRef(willHidden);
-	        const sharp = animation.getSharp && animation.getSharp(willHidden, this.props.rectStyle);
+	        const ref = animation.getRef();
+	        const sharp = animation.getSharp && animation.getSharp(closing, this.props.rectStyle);
 
-	        let modalStyle = animation.getModalStyle(willHidden);
+	        let modalStyle = animation.getModalStyle(closing);
 	        if (this.props.modalStyle) {
 	        	modalStyle = css`
 					composes: ${modalStyle};
@@ -64,7 +60,7 @@ export default (animation) => {
 				`;
 	        }
 
-			let backdropStyle = animation.getBackdropStyle(willHidden);
+			let backdropStyle = animation.getBackdropStyle(closing);
 			if (this.props.backdropStyle) {
 	        	backdropStyle = css`
 					composes: ${backdropStyle};
@@ -72,7 +68,7 @@ export default (animation) => {
 				`;
 	        }
 
-			let contentStyle = animation.getContentStyle(willHidden);
+			let contentStyle = animation.getContentStyle(closing);
 			if (this.props.contentStyle) {
 				contentStyle = css`
 					composes: ${contentStyle};
@@ -82,7 +78,7 @@ export default (animation) => {
 
 	        const backdrop = this.props.backdrop ? React.createElement('div', {style: backdropStyle, onClick: this.props.closeOnClick ? this.handleBackdropClick : null}) : undefined;
 
-	        if (willHidden) {
+	        if (closing) {
 		        const node = this.refs[ref];
 		        this.addTransitionListener(node, this.leave);
 	        }
@@ -102,7 +98,7 @@ export default (animation) => {
 
         leave() {
 	        this.setState({
-	        	hidden: true,
+	        	visible: false,
 	        });
 	        this.props.onHide();
         };
@@ -112,11 +108,13 @@ export default (animation) => {
         };
 
         show() {
-        	if (!this.hasHidden()) return;
+        	if (this.state.visible){
+                return;
+            }
 
 	        this.setState({
-		        willHidden: false,
-		        hidden: false,
+		        closing: false,
+		        visible: false,
 	        });
 
 	        setTimeout(() => {
@@ -127,18 +125,20 @@ export default (animation) => {
         };
 
         hide() {
-	        if (this.hasHidden()) return;
+	        if (!this.state.visible) {
+                return;
+            }
 
 	        this.setState({
-	        	willHidden: true
+	        	closing: true
 	        });
         };
 
         toggle() {
-	        if (this.hasHidden()) {
-	        	this.show();
-	        } else {
+	        if (this.state.visible) {
 	        	this.hide();
+	        } else {
+	        	this.show();
 	        }
         };
 

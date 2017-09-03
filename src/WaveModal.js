@@ -216,7 +216,7 @@ export default modalFactory({
             left: 50%;
         `;
     },
-    getBackdropStyle: (visible) => {
+    getBackdropStyle: (closing) => {
         return css`
             position: fixed;
             top: 0;
@@ -227,18 +227,18 @@ export default modalFactory({
             background-color: #373A47;
             animation-fill-mode: forwards;
             animation-duration: 0.3s;
-            animation-name: ${visible ? hideBackdropAnimation : showBackdropAnimation};
-            animation-timing-function: ${visible ? hideAnimation.timingFunction : showAnimation.timingFunction};
+            animation-name: ${closing ? hideBackdropAnimation : showBackdropAnimation};
+            animation-timing-function: ${closing ? hideAnimation.timingFunction : showAnimation.timingFunction};
         `;
     },
-    getContentStyle: (visible) => {
+    getContentStyle: (closing) => {
         return css`
             margin: 0;
             background-color: white;
-            animation-duration: ${visible ? hideAnimation.duration : showAnimation.duration};
+            animation-duration: ${closing ? hideAnimation.duration : showAnimation.duration};
             animation-fill-mode: forwards;
-            animation-name: ${visible ? hideContentAnimation : showContentAnimation};
-            animation-timing-function: ${visible ? hideAnimation.timingFunction : showAnimation.timingFunction};
+            animation-name: ${closing ? hideContentAnimation : showContentAnimation};
+            animation-timing-function: ${closing ? hideAnimation.timingFunction : showAnimation.timingFunction};
         `;
     },
 });

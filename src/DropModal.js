@@ -93,7 +93,7 @@ export default modalFactory({
     getRef: () => {
         return 'modal';
     },
-    getModalStyle: (visible) => {
+    getModalStyle: (closing) => {
         return css`
             position: fixed;
             width: 500px;
@@ -102,13 +102,13 @@ export default modalFactory({
             left: 50%;
             background-color: white;
             z-index: 1050;
-            animation-duration: ${visible ? hideAnimation.duration : showAnimation.duration};
+            animation-duration: ${closing ? hideAnimation.duration : showAnimation.duration};
             animation-fill-mode: forwards;
-            animation-name: ${visible ? hideModalAnimation : showModalAnimation};
-            animation-timing-function: ${visible ? hideAnimation.timingFunction : showAnimation.timingFunction};
+            animation-name: ${closing ? hideModalAnimation : showModalAnimation};
+            animation-timing-function: ${closing ? hideAnimation.timingFunction : showAnimation.timingFunction};
         `;
     },
-    getBackdropStyle: (visible) => {
+    getBackdropStyle: (closing) => {
         return css`
             position: fixed;
             top: 0;
@@ -117,21 +117,21 @@ export default modalFactory({
             left: 0;
             z-index: 1040;
             background-color: #373A47;
-            animation-duration: ${visible ? hideAnimation.duration : showAnimation.duration};
+            animation-duration: ${closing ? hideAnimation.duration : showAnimation.duration};
             animation-fill-mode: forwards;
-            animation-name: ${visible ? hideBackdropAnimation : showBackdropAnimation};
-            animation-timing-function: ${visible ? hideAnimation.timingFunction : showAnimation.timingFunction};
+            animation-name: ${closing ? hideBackdropAnimation : showBackdropAnimation};
+            animation-timing-function: ${closing ? hideAnimation.timingFunction : showAnimation.timingFunction};
         `;
     },
-    getContentStyle: (visible) => {
+    getContentStyle: (closing) => {
         return css`
             margin: 0;
             opacity: 0;
-            animation-duration: ${visible ? hideAnimation.duration : showAnimation.duration};
+            animation-duration: ${closing ? hideAnimation.duration : showAnimation.duration};
             animation-fill-mode: forwards;
             animation-delay: 0.25s;
             animation-name: showContentAnimation;
-            animation-timing-function: ${visible ? hideAnimation.timingFunction : showAnimation.timingFunction};
+            animation-timing-function: ${closing ? hideAnimation.timingFunction : showAnimation.timingFunction};
         `;
     },
 });
