@@ -9,10 +9,9 @@ export default (animation) => {
             super(props);
             this.state = {
                 willHidden: false,
-                hidden: true,
+                visible: false,
             };
 
-            this.hasHidden = this.hasHidden.bind(this);
             this.handleBackdropClick = this.handleBackdropClick.bind(this);
             this.leave = this.leave.bind(this);
             this.enter = this.enter.bind(this);
@@ -20,10 +19,6 @@ export default (animation) => {
             this.hide = this.hide.bind(this);
             this.toggle = this.toggle.bind(this);
             this.listenKeyboard = this.listenKeyboard.bind(this);
-        };
-
-        hasHidden() {
-            return this.state.hidden;
         };
 
         addTransitionListener(node, handle) {
@@ -46,8 +41,9 @@ export default (animation) => {
         };
 
         render() {
-            const hidden = this.hasHidden();
-            if (hidden) return null;
+            if (!this.state.visible) {
+                return null;
+            }
 
             const willHidden = this.state.willHidden;
             const animation = this.props.animation;
@@ -101,7 +97,7 @@ export default (animation) => {
 
         leave() {
             this.setState({
-                hidden: true,
+                visible: false,
             });
             this.props.onHide();
         };
@@ -111,11 +107,13 @@ export default (animation) => {
         };
 
         show() {
-            if (!this.hasHidden()) return;
+            if (this.state.visible) {
+                return;
+            }
 
             this.setState({
                 willHidden: false,
-                hidden: false,
+                visible: true,
             });
 
             setTimeout(function(){
@@ -126,7 +124,9 @@ export default (animation) => {
         };
 
         hide() {
-            if (this.hasHidden()) return;
+            if (!this.state.visible) {
+                return;
+            }
 
             this.setState({
                 willHidden: true,
@@ -134,10 +134,10 @@ export default (animation) => {
         };
 
         toggle() {
-            if (this.hasHidden()) {
-                this.show();
-            } else {
+            if (this.state.visible) {
                 this.hide();
+            } else {
+                this.show();
             }
         };
 
