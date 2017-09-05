@@ -8,7 +8,7 @@ export default (animation) => {
         constructor(props) {
             super(props);
             this.state = {
-                willHidden: false,
+                closing: false,
                 visible: false,
             };
 
@@ -45,13 +45,13 @@ export default (animation) => {
                 return null;
             }
 
-            const willHidden = this.state.willHidden;
+            const closing = this.state.closing;
             const animation = this.props.animation;
-            const modalStyle = animation.getModalStyle(willHidden);
-            const backdropStyle = animation.getBackdropStyle(willHidden);
-            const contentStyle = animation.getContentStyle(willHidden);
-            const ref = animation.getRef(willHidden);
-            const sharp = animation.getSharp && animation.getSharp(willHidden, this.props.rectStyle);
+            const modalStyle = animation.getModalStyle(closing);
+            const backdropStyle = animation.getBackdropStyle(closing);
+            const contentStyle = animation.getContentStyle(closing);
+            const ref = animation.getRef(closing);
+            const sharp = animation.getSharp && animation.getSharp(closing, this.props.rectStyle);
 
             // Apply custom style properties
             if (this.props.modalStyle) {
@@ -77,7 +77,7 @@ export default (animation) => {
 
             const backdrop = this.props.backdrop ? React.createElement('div', {style: backdropStyle, onClick: this.props.closeOnClick ? this.handleBackdropClick : null}) : undefined;
 
-            if (willHidden) {
+            if (closing) {
                 const node = this.refs[ref];
                 this.addTransitionListener(node, this.leave);
             }
@@ -112,7 +112,7 @@ export default (animation) => {
             }
 
             this.setState({
-                willHidden: false,
+                closing: false,
                 visible: true,
             });
 
@@ -129,7 +129,7 @@ export default (animation) => {
             }
 
             this.setState({
-                willHidden: true,
+                closing: true,
             });
         };
 

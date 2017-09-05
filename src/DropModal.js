@@ -79,10 +79,10 @@ const showContentAnimation = animation.showContentAnimation;
 const hideContentAnimation = animation.hideContentAnimation;
 
 export default modalFactory({
-  getRef: (willHidden) => {
+  getRef: (closing) => {
     return 'modal';
   },
-  getModalStyle: (willHidden) => {
+  getModalStyle: (closing) => {
     return appendVendorPrefix({
       position: 'fixed',
       width: '500px',
@@ -91,13 +91,13 @@ export default modalFactory({
       left: '50%',
       backgroundColor: 'white',
       zIndex: 1050,
-      animationDuration: (willHidden ? hideAnimation : showAnimation).animationDuration,
+      animationDuration: (closing ? hideAnimation : showAnimation).animationDuration,
       animationFillMode: 'forwards',
-      animationName: willHidden ? hideModalAnimation : showModalAnimation,
-      animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction,
+      animationName: closing ? hideModalAnimation : showModalAnimation,
+      animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
     });
   },
-  getBackdropStyle: (willHidden) => {
+  getBackdropStyle: (closing) => {
     return appendVendorPrefix({
       position: 'fixed',
       top: 0,
@@ -106,21 +106,21 @@ export default modalFactory({
       left: 0,
       zIndex: 1040,
       backgroundColor: '#373A47',
-      animationDuration: (willHidden ? hideAnimation : showAnimation).animationDuration,
+      animationDuration: (closing ? hideAnimation : showAnimation).animationDuration,
       animationFillMode: 'forwards',
-      animationName: willHidden ? hideBackdropAnimation : showBackdropAnimation,
-      animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction,
+      animationName: closing ? hideBackdropAnimation : showBackdropAnimation,
+      animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
     });
   },
-  getContentStyle: (willHidden) => {
+  getContentStyle: (closing) => {
     return appendVendorPrefix({
       margin: 0,
       opacity: 0,
-      animationDuration: (willHidden ? hideAnimation : showAnimation).animationDuration,
+      animationDuration: (closing ? hideAnimation : showAnimation).animationDuration,
       animationFillMode: 'forwards',
       animationDelay: '0.25s',
       animationName: showContentAnimation,
-      animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction,
+      animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
     });
   },
 });

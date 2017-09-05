@@ -57,10 +57,10 @@ const showBackdropAnimation = animation.showBackdropAnimation;
 const hideBackdropAnimation = animation.hideBackdropAnimation;
 
 export default modalFactory({
-  getRef: (willHidden) => {
+  getRef: (closing) => {
     return 'content';
   },
-  getSharp: (willHidden, rectStyles = {}) => {
+  getSharp: (closing, rectStyles = {}) => {
     const strokeDashLength = 1680;
     const showSharpAnimation = insertKeyframesRule({
       '0%': {
@@ -77,9 +77,9 @@ export default modalFactory({
       zIndex: '-1',
     };
     const rectStyle = appendVendorPrefix({
-      animationDuration: willHidden ? '0.4s' : '0.8s',
+      animationDuration: closing ? '0.4s' : '0.8s',
       animationFillMode: 'forwards',
-      animationName: willHidden ? hideContentAnimation : showSharpAnimation,
+      animationName: closing ? hideContentAnimation : showSharpAnimation,
       stroke: '#ffffff',
       strokeWidth: '2px',
       strokeDasharray: strokeDashLength,
@@ -102,7 +102,7 @@ export default modalFactory({
       </div>
     );
   },
-  getModalStyle: (willHidden) => {
+  getModalStyle: (closing) => {
     return appendVendorPrefix({
       zIndex: 1050,
       position: 'fixed',
@@ -112,7 +112,7 @@ export default modalFactory({
       left: '50%',
     })
   },
-  getBackdropStyle: (willHidden) => {
+  getBackdropStyle: (closing) => {
     return appendVendorPrefix({
       position: 'fixed',
       top: 0,
@@ -123,18 +123,18 @@ export default modalFactory({
       backgroundColor: '#373A47',
       animationFillMode: 'forwards',
       animationDuration: '0.4s',
-      animationName: willHidden ? hideBackdropAnimation : showBackdropAnimation,
-      animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction,
+      animationName: closing ? hideBackdropAnimation : showBackdropAnimation,
+      animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
     });
   },
-  getContentStyle: (willHidden) => {
+  getContentStyle: (closing) => {
     return appendVendorPrefix({
       margin: 0,
       backgroundColor: 'white',
-      animationDuration: (willHidden ? hideAnimation : showAnimation).animationDuration,
+      animationDuration: (closing ? hideAnimation : showAnimation).animationDuration,
       animationFillMode: 'forwards',
-      animationName: willHidden ? hideContentAnimation : showContentAnimation,
-      animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction,
+      animationName: closing ? hideContentAnimation : showContentAnimation,
+      animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
     });
   },
 });

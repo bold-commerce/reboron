@@ -56,10 +56,10 @@ const showBackdropAnimation = animation.showBackdropAnimation;
 const hideBackdropAnimation = animation.hideBackdropAnimation;
 
 export default modalFactory({
-    getRef: function(willHidden) {
+    getRef: function(closing) {
       return 'content';
     },
-    getModalStyle: function(willHidden) {
+    getModalStyle: function(closing) {
       return appendVendorPrefix({
         zIndex: 1050,
         position: 'fixed',
@@ -69,7 +69,7 @@ export default modalFactory({
         left: '50%',
       });
     },
-    getBackdropStyle: function(willHidden) {
+    getBackdropStyle: function(closing) {
       return appendVendorPrefix({
         position: 'fixed',
         top: 0,
@@ -80,18 +80,18 @@ export default modalFactory({
         backgroundColor: '#373A47',
         animationFillMode: 'forwards',
         animationDuration: '0.4s',
-        animationName: willHidden ? hideBackdropAnimation : showBackdropAnimation,
-        animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction,
+        animationName: closing ? hideBackdropAnimation : showBackdropAnimation,
+        animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
       });
     },
-    getContentStyle: function(willHidden) {
+    getContentStyle: function(closing) {
       return appendVendorPrefix({
         margin: 0,
         backgroundColor: 'white',
-        animationDuration: (willHidden ? hideAnimation : showAnimation).animationDuration,
+        animationDuration: (closing ? hideAnimation : showAnimation).animationDuration,
         animationFillMode: 'forwards',
-        animationName: willHidden ? hideContentAnimation : showContentAnimation,
-        animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction,
+        animationName: closing ? hideContentAnimation : showContentAnimation,
+        animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
       });
     },
 });
