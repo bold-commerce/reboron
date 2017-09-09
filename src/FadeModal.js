@@ -1,6 +1,6 @@
 import modalFactory from './modalFactory';
-import insertKeyframesRule from 'domkit/insertKeyframesRule';
 import appendVendorPrefix from 'domkit/appendVendorPrefix';
+import { keyframes } from 'emotion';
 
 const animation = {
   show: {
@@ -11,38 +11,38 @@ const animation = {
     animationDuration: '0.3s',
     animationTimingFunction: 'ease-out',
   },
-  showContentAnimation: insertKeyframesRule({
-    '0%': {
-      opacity: 0,
-    },
-    '100%': {
-      opacity: 1,
-    },
-  }),
-  hideContentAnimation: insertKeyframesRule({
-    '0%': {
-      opacity: 1,
-    },
-    '100%': {
-      opacity: 0,
-    },
-  }),
-  showBackdropAnimation: insertKeyframesRule({
-    '0%': {
-      opacity: 0,
-    },
-    '100%': {
-      opacity: 0.9,
-    },
-  }),
-  hideBackdropAnimation: insertKeyframesRule({
-    '0%': {
-      opacity: 0.9,
-    },
-    '100%': {
-      opacity: 0,
-    },
-  }),
+  showContentAnimation: keyframes`
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  `,
+  hideContentAnimation: keyframes`
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  `,
+  showBackdropAnimation: keyframes`
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.9;
+    }
+  `,
+  hideBackdropAnimation: keyframes`
+    0% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0;
+    }
+  `,
 };
 
 const showAnimation = animation.show;

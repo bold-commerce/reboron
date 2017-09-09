@@ -42,10 +42,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-react-app": "^2.0.1",
     "babel-preset-react-hmre": "^1.1.1",
-<<<<<<< HEAD
-=======
     "emotion": "^7.2.0",
->>>>>>> Add emotion.
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },

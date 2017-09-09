@@ -1,5 +1,4 @@
 import modalFactory from './modalFactory';
-import insertKeyframesRule from 'domkit/insertKeyframesRule';
 import appendVendorPrefix from 'domkit/appendVendorPrefix';
 import { keyframes } from 'emotion';
 
