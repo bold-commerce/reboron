@@ -75,7 +75,7 @@ export default (animation) => {
                 }
             }
 
-            const backdrop = this.props.backdrop ? React.createElement('div', {style: backdropStyle, onClick: this.props.closeOnClick ? this.handleBackdropClick : null}) : undefined;
+            const backdrop = this.props.backdrop ? <div style={ backdropStyle } onClick={ this.props.closeOnClick ? this.handleBackdropClick : null }></div> : undefined;
 
             if (closing) {
                 const node = this.refs[ref];
@@ -83,15 +83,15 @@ export default (animation) => {
             }
 
             return (
-                React.createElement('span', null,
-                    React.createElement('div', {ref: 'modal', style: modalStyle, className: this.props.className},
-                        sharp,
-                        React.createElement('div', {ref: 'content', tabIndex: '-1', style: contentStyle},
-                            this.props.children
-                        )
-                    ),
-                    backdrop
-                )
+                <span>
+                    <div ref={ 'modal' } style={ modalStyle } className={ this.props.className }>
+                        { sharp }
+                        <div ref={ 'content' } tabIndex={ '-1' } style={ contentStyle }>
+                            { this.props.children }
+                        </div>
+                    </div>
+                    { backdrop }
+                </span>
             );
         };
 
