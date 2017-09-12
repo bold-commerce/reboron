@@ -1,6 +1,5 @@
 import modalFactory from './modalFactory';
-import appendVendorPrefix from 'domkit/appendVendorPrefix';
-import { keyframes } from 'emotion';
+import { css, keyframes } from 'emotion';
 
 const animation = {
     show: {
@@ -79,48 +78,48 @@ const showContentAnimation = animation.showContentAnimation;
 const hideContentAnimation = animation.hideContentAnimation;
 
 export default modalFactory({
-    getRef: (closing) => {
+    getRef: () => {
         return 'modal';
     },
     getModalStyle: (closing) => {
-        return appendVendorPrefix({
-            position: 'fixed',
-            width: '500px',
-            transform: 'translate(-50%, -50%)',
-            top: '50%',
-            left: '50%',
-            backgroundColor: 'white',
-            zIndex: 1050,
-            animationDuration: (closing ? hideAnimation : showAnimation).animationDuration,
-            animationFillMode: 'forwards',
-            animationName: closing ? hideModalAnimation : showModalAnimation,
-            animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
-        });
+        return css`
+            position: fixed;
+            width: 500px;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            background-color: white;
+            z-index: 1050;
+            animation-duration: ${(closing ? hideAnimation : showAnimation).animationDuration};
+            animation-fill-mode: forwards;
+            animation-name: ${closing ? hideModalAnimation : showModalAnimation};
+            animation-timing-function: ${(closing ? hideAnimation : showAnimation).animationTimingFunction};
+        `;
     },
     getBackdropStyle: (closing) => {
-        return appendVendorPrefix({
-            position: 'fixed',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            zIndex: 1040,
-            backgroundColor: '#373A47',
-            animationDuration: (closing ? hideAnimation : showAnimation).animationDuration,
-            animationFillMode: 'forwards',
-            animationName: closing ? hideBackdropAnimation : showBackdropAnimation,
-            animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
-        });
+        return css`
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1040;
+            background-color: #373A47;
+            animation-duration: ${(closing ? hideAnimation : showAnimation).animationDuration};
+            animation-fill-mode: forwards;
+            animation-name: ${closing ? hideBackdropAnimation : showBackdropAnimation};
+            animation-timing-function: ${(closing ? hideAnimation : showAnimation).animationTimingFunction};
+        `;
     },
     getContentStyle: (closing) => {
-        return appendVendorPrefix({
-            margin: 0,
-            opacity: 0,
-            animationDuration: (closing ? hideAnimation : showAnimation).animationDuration,
-            animationFillMode: 'forwards',
-            animationDelay: '0.25s',
-            animationName: showContentAnimation,
-            animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
-        });
+        return css`
+            margin: 0;
+            opacity: 0;
+            animation-duration: ${(closing ? hideAnimation : showAnimation).animationDuration};
+            animation-fill-mode: forwards;
+            animation-delay: 0.25s;
+            animation-name: ${showContentAnimation};
+            animation-timing-function: ${(closing ? hideAnimation : showAnimation).animationTimingFunction};
+        `;
     },
 });

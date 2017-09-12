@@ -54,28 +54,32 @@ export default (animation) => {
             const sharp = animation.getSharp && animation.getSharp(closing, this.props.rectStyle);
 
             // Apply custom style properties
-            if (this.props.modalStyle) {
-                const prefixedModalStyle = appendVendorPrefix(this.props.modalStyle);
-                for (let style in prefixedModalStyle) {
-                    modalStyle[style] = prefixedModalStyle[style];
-                }
-            }
+            // if (this.props.modalStyle) {
+            //     const prefixedModalStyle = appendVendorPrefix(this.props.modalStyle);
+            //     for (let style in prefixedModalStyle) {
+            //         modalStyle[style] = prefixedModalStyle[style];
+            //     }
+            // }
+            //
+            // if (this.props.backdropStyle) {
+            //     const prefixedBackdropStyle = appendVendorPrefix(this.props.backdropStyle);
+            //     for (let style in prefixedBackdropStyle) {
+            //         backdropStyle[style] = prefixedBackdropStyle[style];
+            //     }
+            // }
+            //
+            // if (this.props.contentStyle) {
+            //     const prefixedContentStyle = appendVendorPrefix(this.props.contentStyle);
+            //     for (let style in prefixedContentStyle) {
+            //         contentStyle[style] = prefixedContentStyle[style];
+            //     }
+            // }
 
-            if (this.props.backdropStyle) {
-                const prefixedBackdropStyle = appendVendorPrefix(this.props.backdropStyle);
-                for (let style in prefixedBackdropStyle) {
-                    backdropStyle[style] = prefixedBackdropStyle[style];
-                }
-            }
-
-            if (this.props.contentStyle) {
-                const prefixedContentStyle = appendVendorPrefix(this.props.contentStyle);
-                for (let style in prefixedContentStyle) {
-                    contentStyle[style] = prefixedContentStyle[style];
-                }
-            }
-
-            const backdrop = this.props.backdrop ? <div style={ backdropStyle } onClick={ this.props.closeOnClick ? this.handleBackdropClick : null }></div> : undefined;
+            const backdrop = this.props.backdrop ? (
+                <div className={ backdropStyle }
+                     onClick={ this.props.closeOnClick ? this.handleBackdropClick : null }>
+                </div>
+             ) : undefined;
 
             if (closing) {
                 const node = this.refs[ref];
@@ -84,9 +88,12 @@ export default (animation) => {
 
             return (
                 <span>
-                    <div ref={ 'modal' } style={ modalStyle } className={ this.props.className }>
+                    <div ref={ 'modal' }
+                         className={ `${modalStyle} ${this.props.className ? this.props.className : ''}` }>
                         { sharp }
-                        <div ref={ 'content' } tabIndex={ '-1' } style={ contentStyle }>
+                        <div ref={ 'content' }
+                             className={ contentStyle }
+                             tabIndex={ '-1' }>
                             { this.props.children }
                         </div>
                     </div>
