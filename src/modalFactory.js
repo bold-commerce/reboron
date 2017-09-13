@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import transitionEvents from 'domkit/transitionEvents';
-import appendVendorPrefix from 'domkit/appendVendorPrefix';
 import PropTypes from 'prop-types';
+import { css } from 'emotion';
 
 export default (animation) => {
     class Factory extends Component {
@@ -47,33 +47,33 @@ export default (animation) => {
 
             const closing = this.state.closing;
             const animation = this.props.animation;
-            const modalStyle = animation.getModalStyle(closing);
-            const backdropStyle = animation.getBackdropStyle(closing);
-            const contentStyle = animation.getContentStyle(closing);
             const ref = animation.getRef(closing);
             const sharp = animation.getSharp && animation.getSharp(closing, this.props.rectStyle);
 
             // Apply custom style properties
-            // if (this.props.modalStyle) {
-            //     const prefixedModalStyle = appendVendorPrefix(this.props.modalStyle);
-            //     for (let style in prefixedModalStyle) {
-            //         modalStyle[style] = prefixedModalStyle[style];
-            //     }
-            // }
-            //
-            // if (this.props.backdropStyle) {
-            //     const prefixedBackdropStyle = appendVendorPrefix(this.props.backdropStyle);
-            //     for (let style in prefixedBackdropStyle) {
-            //         backdropStyle[style] = prefixedBackdropStyle[style];
-            //     }
-            // }
-            //
-            // if (this.props.contentStyle) {
-            //     const prefixedContentStyle = appendVendorPrefix(this.props.contentStyle);
-            //     for (let style in prefixedContentStyle) {
-            //         contentStyle[style] = prefixedContentStyle[style];
-            //     }
-            // }
+            let modalStyle = animation.getModalStyle(closing);
+            if (this.props.modalStyle) {
+                modalStyle = css`
+                    composes: ${modalStyle};
+                    ${this.props.modalStyle}
+                `;
+            }
+
+            let backdropStyle = animation.getBackdropStyle(closing);
+            if (this.props.backdropStyle) {
+                backdropStyle = css`
+                    composes: ${backdropStyle};
+                    ${this.props.backdropStyle}
+                `;
+            }
+
+            let contentStyle = animation.getContentStyle(closing);
+            if (this.props.contentStyle) {
+                contentStyle = css`
+                    composes: ${contentStyle};
+                    ${this.props.contentStyle}
+                `;
+            }
 
             const backdrop = this.props.backdrop ? (
                 <div className={ backdropStyle }
@@ -171,9 +171,9 @@ export default (animation) => {
         animation: PropTypes.object,
         backdrop: PropTypes.bool,
         closeOnClick: PropTypes.bool,
-        modalStyle: PropTypes.object,
-        backdropStyle: PropTypes.object,
-        contentStyle: PropTypes.object,
+        modalStyle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+        backdropStyle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+        contentStyle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     };
 
     Factory.defaultProps = {
