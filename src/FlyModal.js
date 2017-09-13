@@ -1,6 +1,5 @@
 import modalFactory from './modalFactory';
-import appendVendorPrefix from 'domkit/appendVendorPrefix';
-import { keyframes } from 'emotion';
+import { css, keyframes } from 'emotion';
 
 const animation = {
     show: {
@@ -65,42 +64,42 @@ const showBackdropAnimation = animation.showBackdropAnimation;
 const hideBackdropAnimation = animation.hideBackdropAnimation;
 
 export default modalFactory({
-    getRef: (closing) => {
+    getRef: () => {
         return 'content';
     },
-    getModalStyle: (closing) => {
-        return appendVendorPrefix({
-            zIndex: 1050,
-            position: 'fixed',
-            width: '500px',
-            transform: 'translate3d(-50%, -50%, 0)',
-            top: '50%',
-            left: '50%',
-        });
+    getModalStyle: () => {
+        return css`
+            z-index: 1050;
+            position: fixed;
+            width: 500px;
+            transform: translate3d(-50%, -50%, 0);
+            top: 50%;
+            left: 50%;
+        `;
     },
     getBackdropStyle: (closing) => {
-        return appendVendorPrefix({
-            position: 'fixed',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            zIndex: 1040,
-            backgroundColor: '#373A47',
-            animationFillMode: 'forwards',
-            animationDuration: '0.3s',
-            animationName: closing ? hideBackdropAnimation : showBackdropAnimation,
-            animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
-        });
+        return css`
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1040;
+            background-color: #373A47;
+            animation-fill-mode: forwards;
+            animation-duration: 0.3s;
+            animation-name: ${closing ? hideBackdropAnimation : showBackdropAnimation};
+            animation-timing-function: ${(closing ? hideAnimation : showAnimation).animationTimingFunction};
+        `;
     },
     getContentStyle: (closing) => {
-        return appendVendorPrefix({
-            margin: 0,
-            backgroundColor: 'white',
-            animationDuration: (closing ? hideAnimation : showAnimation).animationDuration,
-            animationFillMode: 'forwards',
-            animationName: closing ? hideContentAnimation : showContentAnimation,
-            animationTimingFunction: (closing ? hideAnimation : showAnimation).animationTimingFunction,
-        });
+        return css`
+            margin: 0;
+            background-color: white;
+            animation-duration: ${(closing ? hideAnimation : showAnimation).animationDuration};
+            animation-fill-mode: forwards;
+            animation-name: ${closing ? hideContentAnimation : showContentAnimation};
+            animation-timing-function: ${(closing ? hideAnimation : showAnimation).animationTimingFunction};
+        `;
     },
 });
