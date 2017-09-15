@@ -1,8 +1,7 @@
 {
   "name": "reboron",
-  "version": "0.4.2",
+  "version": "2.0.0",
   "description": "A collection of dialog animations with React.js",
-  "main": "Boron.js",
   "author": "Jeremy Ayerst",
   "license": "MIT",
   "repository": {
@@ -20,8 +19,7 @@
     "wave": "babel src/WaveModal.js --out-file WaveModal.js"
   },
   "dependencies": {
-    "domkit": "^0.0.1",
-    "emotion": "^6.0.3"
+    "domkit": "^0.0.1"
   },
   "peerDependencies": {
     "prop-types": ">=15.0",
@@ -29,10 +27,10 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
-    "babel-core": "6.17.0",
-    "babel-eslint": "7.1.1",
-    "babel-jest": "17.0.2",
-    "babel-loader": "6.2.7",
+    "babel-core": "6.26.0",
+    "babel-eslint": "7.2.3",
+    "babel-jest": "21.0.2",
+    "babel-loader": "7.1.2",
     "babel-plugin-transform-es2015-spread": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.1",
@@ -40,8 +38,9 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-latest": "^6.24.0",
     "babel-preset-react": "^6.16.0",
-    "babel-preset-react-app": "^2.0.1",
+    "babel-preset-react-app": "^3.0.2",
     "babel-preset-react-hmre": "^1.1.1",
+    "emotion": "^7.2.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },
